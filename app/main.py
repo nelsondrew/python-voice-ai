@@ -2,6 +2,8 @@ from fastapi import FastAPI, File, UploadFile
 import time
 from io import BytesIO
 from starlette.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Import functions from models.py and tts.py
 from app.conversation_context import ConversationContext
@@ -10,6 +12,15 @@ from app.tts import generate_speech_from_text  # Import the new function
 
 # Initialize FastAPI app
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change this to your specific origins if needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 print("FastAPI server is running...")
 
 
