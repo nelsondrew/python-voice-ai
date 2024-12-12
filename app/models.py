@@ -1,6 +1,7 @@
 import multiprocessing
 import tempfile
 import concurrent
+from typing import List
 import openai
 import torch
 import os
@@ -108,14 +109,12 @@ def transcribe_audio(audio_data: bytes, language: str = "en") -> str:
             print(f"Parallel transcription error: {e}")
             return ""
 
-def get_gpt_response(prompt: str) -> str:
+def get_gpt_response(prompt: List[dict]) -> str:
     """Generate a response from OpenAI GPT-3.5."""
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=150,
+        messages=prompt,
+        max_tokens=4096,
         n=1,
         temperature=0.7
     )

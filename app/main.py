@@ -4,12 +4,16 @@ from io import BytesIO
 from starlette.responses import StreamingResponse
 
 # Import functions from models.py and tts.py
+from app.conversation_context import ConversationContext
 from app.models import transcribe_audio, get_gpt_response
 from app.tts import generate_speech_from_text  # Import the new function
 
 # Initialize FastAPI app
 app = FastAPI()
 print("FastAPI server is running...")
+
+
+conversation_context = ConversationContext()
 
 
 @app.post("/process_audio/")
@@ -30,10 +34,14 @@ async def process_audio(file: UploadFile = File(...)):
     log_times["Transcription"] = time.time() - step_start
     print(f"Step 2: Transcription - {log_times['Transcription']:.2f} seconds")
     print(f"Transcription: {transcription}")
+    
+    conversation_context.add_message("user", transcription)
 
     # Step 3: Generate GPT-3.5 response
+    current_context = conversation_context.get_messages()
+    print("Current context" , current_context)
     step_start = time.time()
-    gpt_response = get_gpt_response(transcription)
+    gpt_response = get_gpt_response(current_context)
     log_times["Generate GPT Response"] = time.time() - step_start
     print(f"Step 3: Generate GPT Response - {log_times['Generate GPT Response']:.2f} seconds")
     print(f"GPT-3.5 Response: {gpt_response}")
