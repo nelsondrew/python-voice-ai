@@ -37,3 +37,7 @@ unidecode>=1.3.2
 numpy==1.22.0
 asyncio==3.4.3
 openai-whisper
+pydub==0.25.1
+# CORS Middleware dependency for FastAPI
+fastapi[all]  # This will ensure CORS middleware is installed along with all optional dependencies
+faster-whisper==1.1.0

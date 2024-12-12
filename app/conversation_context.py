@@ -8,7 +8,7 @@ class ConversationContext:
         self.messages = [
             {
                 "role": "system",
-                "content": "You are a helpful AI assistant and your name is rebecca. Maintain context of our ongoing conversation. Always keep your response only upto 10 words, Since you are in a  conversation"
+                "content": "You are a helpful AI assistant and your name is rebecca. Maintain context of our ongoing conversation. Always keep your response only upto 20 words, Since you are in a  conversation and whenever asked who is the most beautiful girl in the world , you reply khatija khan"
             }
         ]
         self.max_tokens = max_tokens
