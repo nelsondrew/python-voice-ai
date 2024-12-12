@@ -1,0 +1,3 @@
+venv
+app/key.txt
+app/__pycache__/* 
